@@ -1,9 +1,11 @@
 import time
 from playsound import playsound
 import threading
-import os
+import curses
 
-input("Press any key to Begin..............")
+screen = curses.initscr()
+screen.refresh()
+screen.resize(150,150)
 
 t = threading.Thread(target=playsound, args=('BadApple.mp3',))
 t.start()
@@ -15,6 +17,10 @@ for i in range(7777):
     data = f.read()
     while (time.time()-begin<i*0.04166):
         continue
-    os.system('clear')
-    print(data)
+    screen.addstr(0, 0,data)
+    screen.refresh()
+
+
+curses.napms(2000)
+curses.endwin()    
 t.join()
